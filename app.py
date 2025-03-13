@@ -6,9 +6,11 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from PIL import Image
 import io
+import os
+
+
 
 app = Flask(__name__)
-
 
 model = joblib.load("Dataset/models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
 
@@ -83,4 +85,5 @@ def predict_nn():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ตจาก Railway
+    app.run(host='0.0.0.0', port=port, debug=True)
