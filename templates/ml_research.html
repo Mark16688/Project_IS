@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚢 About Machine Learning & Titanic Dataset</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/BackgroundPicture/Complete4.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto;
+            overscroll-behavior: none;
+        }
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 30px;
+            background: rgba(31, 38, 65, 0.95); 
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #ffcc00;
+            font-size: 28px;
+        }
+        h2 {
+            color: #f4a261;
+            font-size: 22px;
+            text-align: center;
+        }
+        h3 {
+            color: #f4a261;
+            font-size: 20px;
+        }
+        p {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .section {
+            text-align: left;
+            margin: 20px 0;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ffffff;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #2a3152;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #ffcc00;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+        .highlight {
+            color: #f4a261;
+            font-weight: bold;
+            text-align: center;
+        }
+        .csv-box {
+            background: #2a3152;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            text-align: left;
+        }
+        .section-box {
+            background: #2a3152;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #2a3152;
+            text-align: left;
+        }
+
+        .section-box h2 {
+            color: #ffcc00;
+            text-align: center;
+        }
+
+        .section-box ul, .section-box ol {
+            margin-left: 20px;
+        }
+        .sources a {
+            color: #ffcc00; /* เปลี่ยนสีของลิงก์เป็นสีเหลือง */
+            text-decoration: none; /* ลบขีดเส้นใต้ */
+            font-weight: bold;
+        }
+
+        .sources a:hover {
+            color: #e6b800; /* สีเข้มขึ้นเมื่อ hover */
+        }
+
+        .sources {
+            text-align: left; /* จัดเนื้อหาให้อยู่ด้านซ้าย */
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚢 About Machine Learning & Titanic Dataset</h1>
+    
+    <!-- 📌 แนวทางการพัฒนา Machine Learning -->
+<div class="section-box">
+    <h2>📌 แนวทางการพัฒนา Machine Learning</h2>
+    <p>การพัฒนาโมเดล Machine Learning สำหรับ Titanic Dataset เป็นไปตามขั้นตอนหลักดังนี้:</p>
+
+    <h3>📊 การเตรียมข้อมูล</h3>
+    <ul>
+        <li>ลบค่าข้อมูลที่ขาดหาย (Missing Values)</li>
+        <li>แปลงค่าข้อมูลประเภทหมวดหมู่เป็นตัวเลข (Categorical Encoding)</li>
+        <li>ทำการปรับขนาดค่าข้อมูล (Feature Scaling) เพื่อให้โมเดลเรียนรู้ได้ดีขึ้น</li>
+    </ul>
+
+    <h3>🧠 ทฤษฎีของอัลกอริทึม</h3>
+    <p>โมเดลที่ถูกนำมาใช้ ได้แก่:</p>
+    <ul>
+        <li><strong>Random Forest:</strong> ใช้การรวมผลจากหลาย Decision Trees</li>
+        <li><strong>Logistic Regression:</strong> ใช้สำหรับจำแนกกลุ่มข้อมูล (Classification)</li>
+        <li><strong>Support Vector Machine (SVM):</strong> ใช้ Hyperplane ในการแยกข้อมูล</li>
+    </ul>
+
+    <h3>⚙️ ขั้นตอนการพัฒนาโมเดล</h3>
+    <ol>
+        <li>โหลดและสำรวจข้อมูล Titanic Dataset</li>
+        <li>ทำความสะอาดข้อมูล และเลือก Feature ที่สำคัญ</li>
+        <li>แบ่งชุดข้อมูลออกเป็น "Train/Test Split"</li>
+        <li>เลือกอัลกอริทึมที่เหมาะสมและ Train โมเดล</li>
+        <li>วัดประสิทธิภาพโมเดลด้วย Accuracy, Precision, Recall, และ F1-score</li>
+    </ol>
+</div>
+
+    <div class="section">
+        <h2 class="highlight">📊 Dataset: Titanic Survival</h2>
+        <p>ชุดข้อมูลนี้ใช้ข้อมูลจากผู้โดยสารเรือ Titanic และพยากรณ์ว่าผู้โดยสารรอดชีวิตหรือไม่</p>
+        
+        <h3>📌 Feature ของ Titanic Dataset </h3>
+        <table>
+            <tr>
+                <th>Feature Name</th>
+                <th>คำอธิบาย</th>
+            </tr>
+            <tr>
+                <td>Pclass</td>
+                <td>ระดับชั้นโดยสาร (1st, 2nd, 3rd class)</td>
+            </tr>
+            <tr>
+                <td>Sex</td>
+                <td>เพศของผู้โดยสาร (Male/Female)</td>
+            </tr>
+            <tr>
+                <td>Age</td>
+                <td>อายุของผู้โดยสาร</td>
+            </tr>
+            <tr>
+                <td>SibSp</td>
+                <td>จำนวนพี่น้อง/คู่สมรสที่เดินทางด้วยกัน</td>
+            </tr>
+            <tr>
+                <td>Parch</td>
+                <td>จำนวนพ่อแม่/ลูกที่เดินทางด้วยกัน</td>
+            </tr>
+            <tr>
+                <td>Fare</td>
+                <td>ค่าตั๋วโดยสาร</td>
+            </tr>
+            <tr>
+                <td>Embarked</td>
+                <td>ท่าเรือที่ขึ้นเรือ (C = Cherbourg, Q = Queenstown, S = Southampton)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 🗂 ตัวอย่างข้อมูลจากไฟล์ CSV -->
+    <div class="section">
+        <h2>📄 ตัวอย่างข้อมูลจากไฟล์ CSV</h2>
+        <div class="csv-box">
+            <pre>
+    Pclass, Sex, Age, SibSp, Parch, Fare, Embarked
+    3, Male, 22, 1, 0, 7.25, S
+    1, Female, 38, 1, 0, 71.28, C
+            </pre>
+        </div>
+    </div>
+
+    <div class="sources">
+        <h2>📚 แหล่งอ้างอิง</h2>
+            <p>📌 Titanic - Machine Learning from Disaster <a href="https://www.kaggle.com/c/titanic" target="_blank">🔗Kaggle Titanic - Machine Learning</a></p>
+            <p>📌 Dataset Titanic - Machine Learning from Disaster <a href="https://www.kaggle.com/c/titanic/data" target="_blank">🔗Kaggle Titanic Dataset</a></p>
+            <p>📌 Scikit-learn Machine Learning in Python <a href="https://scikit-learn.org/stable/" target="_blank">🔗Scikit-Learn Guide for ML</a></p>
+            <p>📌 TensorFlow Guide <a href="https://www.tensorflow.org/guide" target="_blank">🔗TensorFlow Guide for ML</a></p>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="button">กลับหน้าหลัก</a>
+    </div>
+        
+</div>
+
+</body>
+</html>

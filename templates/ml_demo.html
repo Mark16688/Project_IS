@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚢 Titanic Survival Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            content: "";
+            background-image: url('/static/BackgroundPicture/Complete5.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transform: translateY(0px);
+            transition: tranform 0.2s ease-out;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto;
+            overscroll-behavior: none;
+        }
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 30px;
+            background: rgba(31, 38, 65, 0.95); 
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #ffcc00;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin: 10px 0;
+            text-align: left;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box; /* ป้องกันขนาดช่องไม่เท่ากัน */
+        }
+        .button {
+            border-radius: 8px;
+            margin-top: 15px;
+            margin: 20px auto 10px;
+            padding: 15px;
+            background: #ffcc00;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+        .button:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+        .result-box {
+            background: #2a3152;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚢 Titanic Survival Prediction</h1>
+    
+    <form action="/predict" method="post">
+        <div class="input-group">
+            <label>Class (Pclass):</label>
+            <select name="Pclass">
+                <option value="1">1st Class</option>
+                <option value="2">2nd Class</option>
+                <option value="3">3rd Class</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Sex:</label>
+            <select name="Sex">
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Age:</label>
+            <input type="number" name="Age" required>
+        </div>
+
+        <div class="input-group">
+            <label>Siblings/Spouses Aboard (SibSp):</label>
+            <input type="number" name="SibSp" required>
+        </div>
+
+        <div class="input-group">
+            <label>Parents/Children Aboard (Parch):</label>
+            <input type="number" name="Parch" required>
+        </div>
+
+        <div class="input-group">
+            <label>Fare:</label>
+            <input type="number" name="Fare" step="0.01" required>
+        </div>
+
+        <div class="input-group">
+            <label>Embarked:</label>
+            <select name="Embarked">
+                <option value="0">Cherbourg (C)</option>
+                <option value="1">Queenstown (Q)</option>
+                <option value="2">Southampton (S)</option>
+            </select>
+        </div>
+
+        <button type="submit" class="button">🔍 Predict</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result-box">
+        <h2>📊 Prediction Result:</h2>
+        <p>{{ prediction }}</p>
+    </div>
+    {% endif %}
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="button">กลับหน้าหลัก</a>
+    </div>
+</div>
+
+</body>
+</html>

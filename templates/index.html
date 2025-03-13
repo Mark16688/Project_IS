@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI AI Prediction Web App & Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background-image: url('/static/BackgroundPicture/Complete1.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-color: #12172b;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto;
+            overscroll-behavior: none;
+        }
+
+        .header {
+            background-color: #1f2641;  /* สีของเฮดเดอร์ */
+            padding: 20px;
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #ffcc00; /* สีเหลือง */
+        }
+
+        .container {
+            position: absolute;
+            bottom: 40px; /* ปรับให้อยู่ด้านล่าง */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            background: #1f2641; /* สีพื้นหลังของการ์ด */
+            border-radius: 12px;
+            padding: 20px;
+            width: 280px; /* เพิ่มขนาดการ์ดให้สมดุล */
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            color: #ffcc00; /* สีเหลือง */
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #d3d3d3; /* เทาอ่อน */
+        }
+
+        .card button {
+            margin-top: 10px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            background-color: #ffcc00; /* สีเหลือง */
+            color: #000;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .card button:hover {
+            background-color: #e6b800; /* สีเหลืองเข้มขึ้น */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">AI Prediction Web App & Demo</div>
+
+    <div class="container">
+        <div class="card">
+            <h2>About Machine Learning</h2>
+            <p>ศึกษาข้อมูลเกี่ยวกับ Machine Learning และ Titanic Dataset เรียนรู้กระบวนการพัฒนาโมเดลตั้งแต่การเตรียมข้อมูล, ทฤษฎีอัลกอริทึม, และการสร้างโมเดลคาดการณ์การรอดชีวิตของผู้โดยสารไททานิค</p>
+            <button onclick="location.href='/ml_research'">อ่านเพิ่มเติม</button>
+        </div>
+        <div class="card">
+            <h2>Machine Learning Demo</h2>
+            <p>ทดลองใช้โมเดล Machine Learning ที่สร้างขึ้นจาก Random Forest, Logistic Regression, และ SVM ป้อนข้อมูลผู้โดยสารแล้วทำนายโอกาสรอดชีวิตจากอุบัติเหตุไททานิค</p>
+            <button onclick="location.href='/ml_demo'">ทดลองใช้</button>
+        </div>
+        <div class="card">
+            <h2>About Neural Network</h2>
+            <p>เรียนรู้เกี่ยวกับ Neural Networks และ Convolutional Neural Networks (CNN) ศึกษาการใช้ CNN ในการจำแนกภาพ เช่น การจดจำลายมือ หรือรูปแบบข้อมูลเชิงซ้อน</p>
+            <button onclick="location.href='/nn_research'">อ่านเพิ่มเติม</button>
+        </div>
+        <div class="card">
+            <h2>Neural Network Demo</h2>
+            <p>ทดลองใช้งานโมเดล CNN ที่ผ่านการฝึกมาเพื่อจดจำตัวเลขจากชุดข้อมูล MNIST อัปโหลดภาพหรือลองป้อนข้อมูลเพื่อดูผลลัพธ์</p>
+            <button onclick="location.href='/nn_demo'">ทดลองใช้</button>
+        </div>
+    </div>
+</body>
+</html>

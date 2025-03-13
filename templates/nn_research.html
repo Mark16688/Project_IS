@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Neural Network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/BackgroundPicture/Complete3.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto;
+            overscroll-behavior: none;
+        }
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 30px;
+            background: rgba(31, 38, 65, 0.95); 
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #ffcc00;
+            font-size: 28px;
+        }
+        h2 {
+            color: #f4a261;
+            font-size: 22px;
+            text-align: center;
+        }
+        h3 {
+            color: #f4a261;
+            font-size: 20px;
+            text-align: center;
+        }
+        p {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .block {
+            background: #2a3152;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #ffcc00;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+        .highlight {
+            color: #f4a261;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            background: #2a3152;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ffffff;
+        }
+        th {
+            background: #3b4b73;
+            color: #ffffff;
+        }
+        .pre-box {
+            background: #2a3152;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            text-align: left;
+        }
+        a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .text-left {
+            text-align: left;
+            padding-left: 20px; /* ปรับระยะห่างขอบซ้าย */
+        }
+        .sources a {
+            color: #ffcc00; /* เปลี่ยนสีของลิงก์เป็นสีเหลือง */
+            text-decoration: none; /* ลบขีดเส้นใต้ */
+            font-weight: bold;
+        }
+
+        .sources a:hover {
+            color: #e6b800; /* สีเข้มขึ้นเมื่อ hover */
+        }
+
+        .sources {
+            text-align: left; /* จัดเนื้อหาให้อยู่ด้านซ้าย */
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📌 About Neural Network & MNIST Dataset</h1>
+
+    <div class="block text-left">
+        <h2>🛠 แนวทางการพัฒนา Neural Network</h2>
+        <p>การพัฒนาโมเดล Neural Network สำหรับ MNIST Dataset เริ่มต้นจากกระบวนการสำคัญ 3 ขั้นตอน</p>
+
+        <h3>1️⃣ การเตรียมข้อมูล</h3>
+        <p>ชุดข้อมูล MNIST มีรูปภาพขนาด 28x28 พิกเซล และมีค่าความเข้มของแต่ละพิกเซลตั้งแต่ 0-255 ซึ่งต้องถูกปรับขนาดให้อยู่ในช่วง 0-1 เพื่อทำให้โมเดลสามารถเรียนรู้ได้มีประสิทธิภาพมากขึ้น</p>
+
+        <h3>2️⃣ ทฤษฎีของอัลกอริทึม</h3>
+        <p>โมเดลที่ใช้คือ <span class="highlight">Convolutional Neural Network (CNN)</span> ซึ่งเหมาะสำหรับการประมวลผลภาพ โดยมีชั้นสำคัญ เช่น:</p>
+        <ul>
+            <li><strong>Conv2D</strong>: ใช้ฟิลเตอร์เพื่อดึงคุณลักษณะของภาพ</li>
+            <li><strong>MaxPooling</strong>: ลดขนาดภาพเพื่อเพิ่มประสิทธิภาพการคำนวณ</li>
+            <li><strong>Flatten</strong>: แปลงข้อมูลภาพเป็นเวกเตอร์</li>
+            <li><strong>Dense</strong>: ใช้ Fully Connected Layer เพื่อทำนายค่าผลลัพธ์</li>
+        </ul>
+
+        <h3>3️⃣ ขั้นตอนการพัฒนาโมเดล</h3>
+        <p>กระบวนการพัฒนาโมเดล Neural Network มีขั้นตอนดังนี้:</p>
+        <ol>
+            <li>โหลดและเตรียมข้อมูล MNIST</li>
+            <li>สร้างโมเดล CNN ตามโครงสร้างที่กำหนด</li>
+            <li>กำหนดฟังก์ชัน Activation และ Optimizer</li>
+            <li>ทำการ Train โมเดลด้วยชุดข้อมูล</li>
+            <li>ประเมินผลลัพธ์ของโมเดล</li>
+        </ol>
+    </div>
+
+    <h2>📂 โครงสร้างของ Dataset</h2>
+    <p>ข้อมูลมี 60,000 ตัวอย่างสำหรับฝึก และ 10,000 ตัวอย่างสำหรับทดสอบ</p>
+
+    <h3>🔍 Feature ของ MNIST Dataset</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Feature Name</th>
+                <th>คำอธิบาย</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>label</strong></td>
+                <td>ค่าจริงของตัวเลขที่อยู่ในภาพ (0-9)</td>
+            </tr>
+            <tr>
+                <td><strong>pixel0 - pixel783</strong></td>
+                <td>ค่าความเข้มของแต่ละพิกเซลในภาพ (0-255)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>📊 ตัวอย่างข้อมูลจากไฟล์ CSV</h3>
+    <div class="pre-box">
+        <pre>
+label, pixel0, pixel1, ..., pixel781, pixel782, pixel783
+5, 0, 0, ..., 159, 253, 255
+        </pre>
+    </div>
+
+    <h3>🖼 ตัวอย่างการใช้งานไฟล์รูปภาพ 28x28</h3>
+<div class="pre-box">
+    <p><strong>วิธีการใช้งานไฟล์ภาพ</strong></p>
+    <h1>mnist_png</h1>
+    <p>Simple script to convert MNIST to PNG format.</p>
+    <p>PNG files are in <strong>mnist_png.tar.gz</strong>. Directory structure is:</p>
+    <pre>
+training/testing / label / id.png
+    </pre>
+</div>
+
+    <div class="sources">
+        <h2>📚 แหล่งอ้างอิง</h2>
+        <p>📌 LeCun, Y., Cortes, C., & Burges, C. (1998). The MNIST database of handwritten digits.</p>
+        <p>📌 Kaggle MNIST Dataset: <a href="https://www.kaggle.com/datasets/oddrationale/mnist-in-csv?resource=download" target="_blank">🔗 ดาวน์โหลดข้อมูล</a></p>
+        <p>📌 TensorFlow Guide for CNN: <a href="https://www.tensorflow.org/tutorials/images/cnn" target="_blank">🔗 คู่มือการใช้ CNN ใน TensorFlow</a></p>
+        <p>📌 Keras Documentation for CNN: <a href="https://keras.io/api/layers/convolution_layers/convolution2d/" target="_blank">🔗 Keras Conv2D Layer</a></p>
+        <p>📌 GitHub MNIST PNG Dataset: <a href="https://github.com/myleott/mnist_png" target="_blank">🔗 ดาวน์โหลดภาพ MNIST PNG</a> (by Myle Ott)</p>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="button">กลับหน้าหลัก</a>
+    </div>
+</div>
+
+</body>
+</html>

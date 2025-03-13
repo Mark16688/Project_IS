@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Network Model Demo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('/static/BackgroundPicture/Complete2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: auto;
+            overscroll-behavior: none;
+        }
+        .container {
+            max-width: 850px;
+            margin: auto;
+            padding: 30px;
+            background: rgba(31, 38, 65, 0.95); 
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+        h1 {
+            color: #ffcc00;
+            font-size: 26px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .upload-box {
+            background: #2a3152;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: #ffcc00;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .button:hover {
+            background: #e6b800;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #f4a261;
+        }
+        .pre-box {
+            background: #2a3152;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            text-align: left;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🧠 Neural Network Model Demo</h1>
+    <p>อัปโหลดภาพตัวเลข (0-9) ที่คุณต้องการให้โมเดลทำนาย</p>
+
+    <div class="upload-box">
+        <input type="file" id="imageUpload" accept="image/*">
+        <button class="button" onclick="predict()">🔍 ทำนาย</button>
+        <div id="preview"></div>
+    </div>
+
+    <div class="result" id="result">ผลลัพธ์: -</div>
+
+    <h2>🔍 วิธีการทำงานของโมเดล</h2>
+    <div class="pre-box">
+        <pre>
+1. รับภาพอินพุตจากผู้ใช้ (ขนาด 28x28)
+2. แปลงภาพเป็นขาวดำ และปรับขนาด
+3. นำภาพเข้าสู่โมเดล Convolutional Neural Network (CNN)
+4. โมเดลทำการทำนายว่าภาพเป็นตัวเลขใด (0-9)
+        </pre>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/" class="button">กลับหน้าหลัก</a>
+    </div>
+</div>
+
+<script>
+    function predict() {
+        let input = document.getElementById("imageUpload").files[0];
+        if (!input) {
+            alert("กรุณาอัปโหลดภาพก่อน");
+            return;
+        }
+
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            let img = document.createElement("img");
+            img.src = event.target.result;
+            document.getElementById("preview").innerHTML = "";
+            document.getElementById("preview").appendChild(img);
+        };
+        reader.readAsDataURL(input);
+
+        // ส่งภาพไปให้ Flask ทำการทำนาย
+        let formData = new FormData();
+        formData.append("file", input);
+
+        fetch("/predict_nn", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("result").innerText = "ผลลัพธ์: " + data.prediction;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("result").innerText = "เกิดข้อผิดพลาด";
+        });
+    }
+</script>
+
+</body>
+</html>
