@@ -9,8 +9,9 @@ import io
 import os
 
 
-
 app = Flask(__name__)
+
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # บังคับให้ TensorFlow ใช้ CPU
 
 model = joblib.load("Dataset/models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
 
@@ -83,6 +84,26 @@ def predict_nn():
         return jsonify({'prediction': int(predicted_digit)})
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+    
+@app.route("/predict_pickle", methods=["POST"]) ##อันใหม่
+def predict_pickle():
+    try:
+        # ✅ โหลดโมเดลเฉพาะตอน Request เพื่อประหยัด Memory
+        model = pickle.load(open("Dataset/models_complete/model.pkl", "rb"))
+
+        # ✅ รับค่าจากฟอร์ม
+        data = [float(x) for x in request.form.values()]
+
+        # ✅ ทำการพยากรณ์
+        prediction = model.predict([data])
+
+        # ✅ คืนค่าผลลัพธ์ไปยังหน้าเว็บ
+        return render_template("ml_demo.html", prediction=prediction[0])
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ตจาก Railway
