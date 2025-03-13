@@ -76,25 +76,27 @@ def predict():
 @app.route('/predict_nn', methods=['POST'])
 def predict_nn():
     try:
-        # ✅ โหลดโมเดลเฉพาะตอนใช้งาน (ลด RAM)
-        nn_model = load_model("models_complete/mnist_model.h5")
-
         file = request.files['file']
-        img = Image.open(io.BytesIO(file.read())).convert('L')
-        img = img.resize((28, 28))
-        img_array = np.array(img) / 255.0
-        img_array = img_array.reshape(1, 28, 28, 1)
+        if not file:
+            return jsonify({'error': 'No file uploaded'})
+
+        print("✅ Received file:", file.filename)  # ตรวจสอบว่าได้รับไฟล์จริงหรือไม่
+        
+        img = Image.open(io.BytesIO(file.read())).convert('L')  # แปลงเป็นขาวดำ
+        img = img.resize((28, 28))  # ปรับขนาด
+        img_array = np.array(img) / 255.0  # Normalize
+        img_array = img_array.reshape(1, 28, 28, 1)  # Reshape ให้ตรงกับโมเดล
+
+        print("✅ Processed image shape:", img_array.shape)  # ตรวจสอบขนาดภาพ
 
         prediction = nn_model.predict(img_array)
         predicted_digit = np.argmax(prediction)
 
-        # ✅ ลบโมเดลออกจากหน่วยความจำ
-        del nn_model
-        tf.keras.backend.clear_session()  # ล้างกราฟ TensorFlow
+        print("✅ Predicted digit:", predicted_digit)  # Debug ค่า output ของโมเดล
 
         return jsonify({'prediction': int(predicted_digit)})
-
     except Exception as e:
+        print("❌ Error:", str(e))
         return jsonify({'error': str(e)})
     
     
@@ -111,6 +113,9 @@ if gpus:
     except RuntimeError as e:
         print(e)
 
+
+# ป้องกัน TensorFlow ใช้ Memory มากเกินไป
+tf.config.experimental.set_memory_growth = True
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ต 5000 เป็นค่าเริ่มต้น
