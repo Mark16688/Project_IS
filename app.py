@@ -11,12 +11,14 @@ import os
 
 app = Flask(__name__)
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # บังคับให้ TensorFlow ใช้ CPU
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # บังคับให้ TensorFlow ใช้ CPU อย่างชัดเจน
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # ปิด oneDNN เพื่อลด Warning
 
-model = joblib.load("Dataset/models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
+model = joblib.load("models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
 
 # โหลดโมเดล Neural Network
-nn_model = load_model("Dataset/models_complete/mnist_model.h5")
+nn_model = load_model("models_complete/mnist_model.h5")
 
 # ----------------- Routes สำหรับแสดงหน้าเว็บ -----------------
 @app.route('/')
