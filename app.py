@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, jsonify
 import joblib
 import pickle
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.models import load_model
+from tensorflow.keras.backend import clear_session
 from PIL import Image
 import io
 import os
@@ -15,10 +17,10 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # บังคับให้ TensorFlow ใช้ CPU อย่างชัดเจน
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # ปิด oneDNN เพื่อลด Warning
 
-model = joblib.load("models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
+#model = joblib.load("models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
 
 # โหลดโมเดล Neural Network
-nn_model = load_model("models_complete/mnist_model.h5")
+#nn_model = load_model("models_complete/mnist_model.h5")
 
 # ----------------- Routes สำหรับแสดงหน้าเว็บ -----------------
 @app.route('/')
@@ -41,13 +43,13 @@ def nn_research():
 def nn_demo():
     return render_template('nn_demo.html')
 
-import pandas as pd
-
-import pandas as pd
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+        # ✅ โหลดโมเดลเฉพาะตอนใช้งาน (ลด RAM)
+        model = joblib.load("models_complete/titanic_model.pkl")
+
         # ✅ รับค่าจากแบบฟอร์ม
         pclass = int(request.form['Pclass'])
         sex = int(request.form['Sex'])
@@ -57,14 +59,14 @@ def predict():
         fare = float(request.form['Fare'])
         embarked = int(request.form['Embarked'])
 
-        # ✅ ใช้ชื่อคอลัมน์เดียวกับตอน Train โมเดล
         feature_names = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]
         input_features = pd.DataFrame([[pclass, sex, age, sibsp, parch, fare, embarked]], columns=feature_names)
 
-        # ✅ ทำการพยากรณ์
         prediction = model.predict(input_features)[0]
 
-        # ✅ คืนค่าผลลัพธ์ไปที่หน้าเว็บ
+        # ✅ ลบโมเดลออกจากหน่วยความจำ
+        del model
+
         result = "✅ Survived" if prediction == 1 else "❌ Did Not Survive"
         return render_template('ml_demo.html', prediction=result)
 
@@ -74,39 +76,42 @@ def predict():
 @app.route('/predict_nn', methods=['POST'])
 def predict_nn():
     try:
+        # ✅ โหลดโมเดลเฉพาะตอนใช้งาน (ลด RAM)
+        nn_model = load_model("models_complete/mnist_model.h5")
+
         file = request.files['file']
-        img = Image.open(io.BytesIO(file.read())).convert('L')  # แปลงเป็นขาวดำ
-        img = img.resize((28, 28))  # ปรับขนาด
-        img_array = np.array(img) / 255.0  # Normalize
-        img_array = img_array.reshape(1, 28, 28, 1)  # Reshape ให้ตรงกับโมเดล
+        img = Image.open(io.BytesIO(file.read())).convert('L')
+        img = img.resize((28, 28))
+        img_array = np.array(img) / 255.0
+        img_array = img_array.reshape(1, 28, 28, 1)
 
         prediction = nn_model.predict(img_array)
         predicted_digit = np.argmax(prediction)
 
+        # ✅ ลบโมเดลออกจากหน่วยความจำ
+        del nn_model
+        tf.keras.backend.clear_session()  # ล้างกราฟ TensorFlow
+
         return jsonify({'prediction': int(predicted_digit)})
+
     except Exception as e:
         return jsonify({'error': str(e)})
     
     
-@app.route("/predict_pickle", methods=["POST"]) ##อันใหม่
-def predict_pickle():
+# จำกัด RAM ไม่ให้ใช้เกินจำเป็น
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
     try:
-        # ✅ โหลดโมเดลเฉพาะตอน Request เพื่อประหยัด Memory
-        model = pickle.load(open("Dataset/models_complete/model.pkl", "rb"))
-
-        # ✅ รับค่าจากฟอร์ม
-        data = [float(x) for x in request.form.values()]
-
-        # ✅ ทำการพยากรณ์
-        prediction = model.predict([data])
-
-        # ✅ คืนค่าผลลัพธ์ไปยังหน้าเว็บ
-        return render_template("ml_demo.html", prediction=prediction[0])
-
-    except Exception as e:
-        return f"Error: {str(e)}"
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)  # เปิดให้ใช้แรมแบบ Dynamic
+            tf.config.experimental.set_virtual_device_configuration(
+                gpu,
+                [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)]  # จำกัดให้ใช้ 1GB เท่านั้น
+            )
+    except RuntimeError as e:
+        print(e)
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ตจาก Railway
+    port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ต 5000 เป็นค่าเริ่มต้น
     app.run(host='0.0.0.0', port=port, debug=True)
