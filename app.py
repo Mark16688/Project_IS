@@ -10,10 +10,10 @@ import io
 app = Flask(__name__)
 
 
-model = joblib.load("models/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
+model = joblib.load("Dataset/models_complete/titanic_model.pkl")  # Log แสดงว่าระบบโหลดโมเดลสำเร็จ
 
 # โหลดโมเดล Neural Network
-nn_model = load_model("models/mnist_model.h5")
+nn_model = load_model("Dataset/models_complete/mnist_model.h5")
 
 # ----------------- Routes สำหรับแสดงหน้าเว็บ -----------------
 @app.route('/')
