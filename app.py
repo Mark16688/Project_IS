@@ -114,4 +114,4 @@ if gpus:
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 8080))  # ใช้พอร์ต 5000 เป็นค่าเริ่มต้น
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=False)
